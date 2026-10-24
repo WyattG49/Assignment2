@@ -34,27 +34,29 @@ def cost_per_day(annual_cost):
 
 def cost_per_credit(annual_cost, credits):
     """Give back what one credit costs. credits is the number taken this semester."""
-    annual_cost_per_credit = (annual_cost / 2) / credits
+    annual_cost_per_credit = (annual_cost / SEMESTERS_PER_YEAR) / credits
     return annual_cost_per_credit
 
 
 def cost_per_class(annual_cost, credits):
     """Give back what one 50-minute CS 1430 class meeting costs."""
-    cost_per_class = (annual_cost / 2) / credits * CS1430_CREDITS / CS1430_MEETINGS_PER_SEMESTER
+    cost_per_class = (annual_cost / SEMESTERS_PER_YEAR) / credits * CS1430_CREDITS / CS1430_MEETINGS_PER_SEMESTER
     return cost_per_class
 
 
 def cost_per_minute(annual_cost, credits):
-    """Give back what one minute of a 50-minute CS 1430 class meeting costs."""
-    cost_per_hour = (annual_cost / 2) / credits * CS1430_CREDITS / CS1430_MEETINGS_PER_SEMESTER / 50
-    return cost_per_hour  # Each class meeting is 50 minutes
+    class_credits = int(input("How many credits is the class? "))
+    class_meetings = int(input("How many class meetings are there in the semester? "))
+    class_length = int(input("How many minutes is each class meeting? "))
+    cost_per_hour = (annual_cost / SEMESTERS_PER_YEAR) / credits * class_credits / class_meetings / class_length
+    return cost_per_hour 
 
 
 # ---- PROGRAM ----
 
 def main():
-    total_cost = float(input("Enter the total cost of college per year: "))
-    total_credits = int(input("Enter the total number of credits taken this semester: "))
+    total_cost = float(input("Cost for one year of college: "))
+    total_credits = int(input("Number of credits per semester: "))
 
     while True:
         print("Cost per Semester: 1")
@@ -69,8 +71,6 @@ def main():
 
         if choice == "Q":
             break
-
-
         elif choice == "1":
             cost = cost_per_semester(total_cost)
             print(f"Cost per Semester: ${cost:.2f}")
